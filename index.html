@@ -1,0 +1,52 @@
+<script>
+    function computerPlay() {
+        let randNumber = Math.floor(Math.random() * 3) + 1;
+        switch (randNumber) {
+            case 1:
+                return "Rock";
+                break;
+            case 2:
+                return "Paper";
+                break;
+            case 3:
+                return "Scissors";
+                break;
+        }
+    }
+
+    function convert1stLetterUp(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    function playRound(playerSelection, computerSelection) {
+        if (playerSelection != computerSelection) {
+            // If player loses
+            if (playerSelection == "Rocks" && computerSelection == "Paper" || playerSelection == "Paper" && computerSelection == "Scissors" || playerSelection == "Scissors" && computerSelection == "Rock") {
+                return (`You lose! ${computerSelection} beats ${playerSelection}`);
+            }
+            else {
+                return (`You win! ${playerSelection} beats ${computerSelection}`);
+            }
+        } else {
+            return (`You tied! ${playerSelection} ties with ${computerSelection}`);
+        }
+    }
+
+    function game() {
+        let numGames = 0;
+        while (numGames < 5) {
+            let playerSelectionTemp = convert1stLetterUp(prompt("Insert your choice!"));
+            if (playerSelectionTemp == "Rock" || playerSelectionTemp == "Paper" || playerSelectionTemp == "Scissor"){
+                let playerSelection = playerSelectionTemp;
+            } else {
+                window.alert("Wrong value entered, try Rock, Paper or Scissor.");
+                playerSelection = convert1stLetterUp(prompt("Insert your choice!"));
+            }
+            let computerSelection = convert1stLetterUp(computerPlay());
+            console.log(playRound(playerSelection, computerSelection));
+            numGames += 1;
+        }
+    }
+
+    game();
+</script>
