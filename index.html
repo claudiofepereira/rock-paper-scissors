@@ -14,7 +14,7 @@
         }
     }
 
-    function convert1stLetterUp(string) {
+    function convert1stLetterCaps(string) {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     }
 
@@ -34,18 +34,26 @@
 
     function game() {
         let numGames = 0;
+        let playerSelection = "";
         while (numGames < 5) {
-            let playerSelectionTemp = convert1stLetterUp(prompt("Insert your choice!"));
-            if (playerSelectionTemp == "Rock" || playerSelectionTemp == "Paper" || playerSelectionTemp == "Scissor"){
-                let playerSelection = playerSelectionTemp;
-            } else {
-                window.alert("Wrong value entered, try Rock, Paper or Scissor.");
-                playerSelection = convert1stLetterUp(prompt("Insert your choice!"));
+            let validInput = false;
+            while (!validInput) {
+                let playerSelectionTemp = convert1stLetterCaps(prompt("Insert your choice!"));
+                if (playerSelectionTemp == "Rock" || playerSelectionTemp == "Paper" || playerSelectionTemp == "Scissor") {
+                    playerSelection = playerSelectionTemp;
+                    validInput = true;
+                    console.log(playerSelection);
+                } else {
+                    window.alert("Wrong value entered, try Rock, Paper or Scissor.");
+                }
             }
-            let computerSelection = convert1stLetterUp(computerPlay());
+            console.log(playerSelection);
+            let computerSelection = convert1stLetterCaps(computerPlay());
             console.log(playRound(playerSelection, computerSelection));
             numGames += 1;
         }
+        window.alert("Game finished.");
+        console.log("Game finished.");
     }
 
     game();
