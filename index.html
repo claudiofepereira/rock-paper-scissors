@@ -1,3 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper and Scissor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="buttons-div">
+        <button id="Rock"><img src="images/rock.png" alt="Rock"></button>
+        <button id="Paper"><img src="images/paper.png" alt="Paper"></button>
+        <button id="Scissors"><img src="images/scissors.png" alt="Scissors"></button>
+    </div>
+
+    <div id="result-div">
+        <p id="result"></p>
+        <p id="current-score"></p>
+    </div>
+</body>
+
+</html>
+
 <script>
     function computerPlay() {
         let randNumber = Math.floor(Math.random() * 3) + 1;
@@ -20,41 +45,39 @@
 
     function playRound(playerSelection, computerSelection) {
         if (playerSelection != computerSelection) {
-            // If player loses
             if (playerSelection == "Rocks" && computerSelection == "Paper" || playerSelection == "Paper" && computerSelection == "Scissors" || playerSelection == "Scissors" && computerSelection == "Rock") {
-                return (`You lose! ${computerSelection} beats ${playerSelection}`);
-            }
-            else {
-                return (`You win! ${playerSelection} beats ${computerSelection}`);
+                p_result.innerHTML = `You lose! Computer ${computerSelection} beats your ${playerSelection}`;
+                current_score.innerHTML = `Current score: Computer ${computerScore} - ${playerScore} Player`;
+                computerScore++;
+            } else {
+                p_result.innerHTML = `You win! Your ${playerSelection} beats computer ${computerSelection}`;
+                current_score.innerHTML = `Current score: Computer ${computerScore} - ${playerScore} Player`;
+                playerScore++;
             }
         } else {
-            return (`You tied! ${playerSelection} ties with ${computerSelection}`);
+            p_result.innerHTML = `You tied! Your ${playerSelection} ties with computer ${computerSelection}`;
+            current_score.innerHTML = `Current score: Computer ${computerScore} - ${playerScore} Player`;
         }
     }
 
-    function game() {
-        let numGames = 0;
-        let playerSelection = "";
-        while (numGames < 5) {
-            let validInput = false;
-            while (!validInput) {
-                let playerSelectionTemp = convert1stLetterCaps(prompt("Insert your choice!"));
-                if (playerSelectionTemp == "Rock" || playerSelectionTemp == "Paper" || playerSelectionTemp == "Scissor") {
-                    playerSelection = playerSelectionTemp;
-                    validInput = true;
-                    console.log(playerSelection);
-                } else {
-                    window.alert("Wrong value entered, try Rock, Paper or Scissor.");
-                }
-            }
-            console.log(playerSelection);
-            let computerSelection = convert1stLetterCaps(computerPlay());
-            console.log(playRound(playerSelection, computerSelection));
-            numGames += 1;
+    function game(playerSelection) {
+        if (playerScore == 5 || computerScore == 5) {
+            p_result.innerHTML = "Game ended.";
+            current_score.innerHTML = `Final score: Computer ${computerScore} - ${playerScore} Player`;
+            return;
         }
-        window.alert("Game finished.");
-        console.log("Game finished.");
+        let computerSelection = convert1stLetterCaps(computerPlay());
+        playRound(playerSelection, computerSelection);
     }
 
-    game();
+    let playerScore = 0;
+    let computerScore = 0;
+    const p_result = document.querySelector("#result");
+    const current_score = document.querySelector("#current-score");
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            game(button.id);
+        });
+    });
 </script>
