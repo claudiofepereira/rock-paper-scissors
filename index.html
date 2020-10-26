@@ -61,9 +61,13 @@
     }
 
     function game(playerSelection) {
-        if (playerScore == 5 || computerScore == 5) {
+        if (playerScore == 5) {
             p_result.innerHTML = "Game ended.";
-            current_score.innerHTML = `Final score: Computer ${computerScore} - ${playerScore} Player`;
+            current_score.innerHTML = `Player won: Player ${playerScore} - ${computerScore} Computer`;
+            return;
+        } else if (computerScore == 5) {
+            p_result.innerHTML = "Game ended.";
+            current_score.innerHTML = `Computer won: Computer ${computerScore} - ${playerScore} Player`;
             return;
         }
         let computerSelection = convert1stLetterCaps(computerPlay());
